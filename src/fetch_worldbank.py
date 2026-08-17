@@ -34,7 +34,7 @@ REGION_NAMES = {
 }
 
 
-def get_counties() -> pd.DataFrame:
+def get_countries() -> pd.DataFrame:
     """
       Provides the countries known by the World Bank
       
