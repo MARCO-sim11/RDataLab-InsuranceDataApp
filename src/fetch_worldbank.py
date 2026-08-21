@@ -1,10 +1,14 @@
-"""
-    Some basic functions to interact with the World bank data API
+"""World Bank data client built on wbgapi.
 
-    Two World bank data are involved : 
-        - db = 2 : World Development Indicators  (Population / GDP)
-        - db = 32 : Global Financial Development (Life/non life Insurance premia/GDP)
+Two World Bank databases are involved:
+  - db=2  (World Development Indicators)      -> GDP, population
+  - db=32 (Global Financial Development)       -> life / non-life insurance
+    premium volume to GDP (%)
+
+wbgapi talks to the official World Bank API directly - no HTML scraping,
+no manual CSV export.
 """
+from __future__ import annotations
 
 import pandas as pd
 import wbgapi as wb
@@ -18,6 +22,10 @@ INDICATORS = {
     "nonlife_penetration": ("GFDD.DI.10", GFD_DB),
     "gdp": ("NY.GDP.MKTP.CD", WDI_DB),
     "population": ("SP.POP.TOTL", WDI_DB),
+    # Official exchange rate, period average (LCU per US$) - used for a
+    # Eurozone country in src/fx_rates.py to convert Allianz's
+    # EUR-denominated density figures into USD.
+    "fx_rate": ("PA.NUS.FCRF", WDI_DB),
 }
 
 # World Bank's 7 standard operational regions (the ones with a numeric
@@ -35,23 +43,21 @@ REGION_NAMES = {
 
 
 def get_countries() -> pd.DataFrame:
-    """
-      Provides the countries known by the World Bank
-      
-      Aggregates (income groups, "World", regional blocks) are exluded
+    """Real countries known to the World Bank.
+
+    Aggregates ("World", income groups, regional blocs, etc.) are excluded
+    via wbgapi's own `aggregate` flag - no name-based guessing needed.
     """
     rows = [
         {
             "iso3": e["id"],
             "country": e["value"],
             "region": REGION_NAMES.get(e.get("region"), e.get("region")),
-            "income_level": e.get("incomeLevel")
+            "income_level": e.get("incomeLevel"),
         }
-
         for e in wb.economy.list()
         if not e.get("aggregate")
     ]
-
     return pd.DataFrame(rows)
 
 
