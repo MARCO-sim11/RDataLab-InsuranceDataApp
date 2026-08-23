@@ -35,7 +35,7 @@ LONG_COLS = ["country", "iso3", "region", "income_level", "year", "type", "penet
 ALLIANZ_SOURCE = "Allianz Global Insurance Report"
 
 # App6/src/build_allianz_dataset.py -> App6 -> Insurance-penetration -> reports
-DEFAULT_REPORTS_DIR = Path(__file__).resolve().parent.parent.parent / "Allianz-Insurance Reports"
+DEFAULT_REPORTS_DIR = Path(__file__).resolve().parent.parent / "Allianz-Insurance Reports"
 
 
 def _eur_to_usd(resolved: pd.DataFrame, eur_col: str, fx: pd.DataFrame, scale: float = 1.0) -> pd.Series:

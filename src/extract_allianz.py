@@ -1,8 +1,15 @@
-"""Extracts the country-level appendix table (premium income, penetration)
-from Allianz Global Insurance Report PDFs. Density (premium per capita) is
-deliberately not extracted - it's reported in EUR while the rest of this
-project works in USD, so premium volume / per-capita get recomputed from
-World Bank GDP and population instead, once merged (see combine_sources.py).
+"""Extracts the country-level appendix table (premium income, penetration,
+and density i.e. premium per capita) from Allianz Global Insurance Report
+PDFs.
+
+Penetration and density are taken *directly* from Allianz - they're
+reported figures, not something this project needs to compute. Premium
+volume is extracted too but only used as a raw EUR reference (see
+build_allianz_dataset.py): the USD premium volume used throughout the app
+is still derived as penetration x World Bank GDP, the same formula used
+for World Bank-sourced years, so premium volume stays comparable across
+the whole 2000-2025 series. Density is reported in EUR - see
+src/fx_rates.py for the EUR->USD conversion applied downstream.
 
 Each report edition covers the *previous* year's KPIs (the report published
 in May 2025 covers 2024 data, etc). Two table layouts are known:
@@ -36,12 +43,12 @@ _VALUE_TOKEN_RE = re.compile(r"^-?[\d.,]+\)?$|^n[/.]?a\.?$", re.IGNORECASE)
 
 # filename -> (data_year, layout) | None if no usable appendix table exists
 REPORT_CONFIG: dict[str, tuple[int, str] | None] = {
-    "Global-Insurance-report-2021.pdf": None,
+    "Global-Insurance-Report-2021.pdf": None,
     "Global-Insurance-Report-2022.pdf": (2021, "2segment"),
     "Global-Insurance-Report-2023.pdf": (2022, "3segment"),
     "Global-Insurance-Report-2024.pdf": (2023, "3segment"),
-    "Global-insurance-report-2025.pdf": (2024, "3segment"),
-    "Global-Insurance-report-2026.pdf": (2025, "3segment"),
+    "Global-insurance-Report-2025.pdf": (2024, "3segment"),
+    "Global-Insurance-Report-2026.pdf": (2025, "3segment"),
 }
 
 
@@ -83,13 +90,11 @@ def _split_row_left(line: str, n_values: int) -> tuple[str, list[str]] | None:
     the numeric columns start and taking the next `n_values` tokens.
 
     Left-anchored on purpose: the premium+penetration columns are always
-    single, unbroken tokens in every report inspected, but the trailing
-    density columns can be split across two tokens by a thousands-separator
-    space in at least one report edition. Anchoring from the country name
-    and only reading the columns we actually need sidesteps that entirely -
-    density isn't parsed here (premium volume / per-capita get recomputed
-    from World Bank GDP and population later instead, to stay in one
-    currency).
+    single, unbroken tokens in every report inspected. Used as-is for the
+    "2segment" layout, where density is also always a single token (no
+    thousands-separator space observed in that report edition); the
+    "3segment" layout needs `_merge_density_tokens` on top of this for its
+    density columns - see `_parse_3segment`.
     """
     tokens = line.split()
     start = _find_value_start(tokens)
@@ -98,21 +103,69 @@ def _split_row_left(line: str, n_values: int) -> tuple[str, list[str]] | None:
     return " ".join(tokens[:start]), tokens[start:start + n_values]
 
 
+# A bare 1-digit token, e.g. the "1" in "1 500" (-> 1500). Every grouped
+# density value observed across report editions has exactly this shape: a
+# single leading digit, a space (i.e. a token break), then a 3-digit group.
+_LONE_DIGIT_RE = re.compile(r"^\d$")
+# A continuation group: exactly 3 digits, optionally with a European-style
+# comma-decimal suffix (e.g. "500", or "362,1" for a value like "3362.1").
+_CONTINUATION_RE = re.compile(r"^\d{3}(,\d{1,2})?$")
+
+
+def _merge_density_tokens(tokens: list[str]) -> list[str]:
+    """Re-joins a thousands-separator space back into one token (e.g.
+    ["1", "500"] -> ["1500"]) for the density columns specifically - the
+    only columns observed to be split this way (see module docstring for
+    why premium/penetration never need this).
+
+    Best-effort heuristic, not a guaranteed-correct parse: a merge fires
+    when the current token is a bare single digit and the next token is a
+    3-digit group. A genuine standalone single-digit density value
+    immediately followed by a genuine standalone 3-digit value would be
+    mis-merged into one - no such case has been observed across the 5
+    report editions with a usable appendix table, but it's a real
+    limitation of parsing text layout rather than a structured table.
+    """
+    merged: list[str] = []
+    i = 0
+    while i < len(tokens):
+        tok = tokens[i]
+        if _LONE_DIGIT_RE.match(tok) and i + 1 < len(tokens) and _CONTINUATION_RE.match(tokens[i + 1]):
+            tok = tok + tokens[i + 1]
+            i += 2
+        else:
+            i += 1
+        merged.append(tok)
+    return merged
+
+
 def _parse_3segment(text: str, data_year: int, report_file: str) -> pd.DataFrame:
     rows = []
     for line in text.split("\n"):
-        parsed = _split_row_left(line, 6)
-        if not parsed:
+        tokens = line.split()
+        start = _find_value_start(tokens)
+        if start is None or start == 0 or len(tokens) - start < 6:
             continue
-        country, vals = parsed
-        floats = [_to_float(v) for v in vals]
+        country = " ".join(tokens[:start])
+        sextet = tokens[start:start + 6]
+        remainder = tokens[start + 6:]
+
+        floats = [_to_float(v) for v in sextet]
         if all(v is None for v in floats):
             continue
         pc_prem, life_prem, health_prem, pc_pen, life_pen, health_pen = floats
+
+        density_tokens = _merge_density_tokens(remainder)[:3]
+        if len(density_tokens) == 3:
+            pc_den, life_den, health_den = [_to_float(v) for v in density_tokens]
+        else:
+            pc_den = life_den = health_den = None
+
         rows.append({
             "country_raw": country, "year": data_year,
             "pc_penetration": pc_pen, "life_penetration": life_pen, "health_penetration": health_pen,
             "pc_premium_eur_bn": pc_prem, "life_premium_eur_bn": life_prem, "health_premium_eur_bn": health_prem,
+            "pc_density_eur": pc_den, "life_density_eur": life_den, "health_density_eur": health_den,
             "source_file": report_file,
         })
     return pd.DataFrame(rows)
@@ -128,12 +181,13 @@ def _parse_2segment(text: str, data_year: int, report_file: str) -> pd.DataFrame
         floats = [_to_float(v) for v in vals]
         if all(v is None for v in floats):
             continue
-        (pc_prem, _pc_yoy, _pc_den, pc_pen,
-         life_prem, _life_yoy, _life_den, life_pen) = floats
+        (pc_prem, _pc_yoy, pc_den, pc_pen,
+         life_prem, _life_yoy, life_den, life_pen) = floats
         rows.append({
             "country_raw": country, "year": data_year,
             "pc_penetration": pc_pen, "life_penetration": life_pen, "health_penetration": None,
             "pc_premium_eur_bn": pc_prem, "life_premium_eur_bn": life_prem, "health_premium_eur_bn": None,
+            "pc_density_eur": pc_den, "life_density_eur": life_den, "health_density_eur": None,
             "source_file": report_file,
         })
     return pd.DataFrame(rows)
@@ -183,15 +237,16 @@ def extract_report(path: Path) -> tuple[pd.DataFrame, dict]:
         meta.update(status="warning", message=f"Only {len(df)} rows extracted from page {page_index + 1} - layout may have changed.")
     else:
         meta.update(status="ok", message=f"Extracted {len(df)} country rows from page {page_index + 1}.")
-    return df, meta, text
+    return df, meta
 
 
 def extract_all(reports_dir: Path) -> tuple[pd.DataFrame, list[dict]]:
     """Extract every report listed in REPORT_CONFIG found in `reports_dir`.
 
     Returns (raw_dataframe, per_report_meta_list). The raw dataframe has one
-    row per country per data_year with pc/life/health penetration - it still
-    needs country-name resolution (see resolve_countries) before use.
+    row per country per data_year with pc/life/health penetration, premium
+    (EUR bn), and density (EUR per capita) - it still needs country-name
+    resolution (see resolve_countries) before use.
     """
     frames = []
     metas = []
