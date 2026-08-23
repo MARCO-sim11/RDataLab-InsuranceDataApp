@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .build_wb_dataset import ID_COLS, to_wide
+from .build_wb_datasets import ID_COLS, to_wide
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 LOG_PATH = DATA_DIR / "combine_log.csv"

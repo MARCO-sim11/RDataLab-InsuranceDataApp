@@ -1,0 +1,4 @@
+timestamp,status,duration_sec,n_wb_rows,n_allianz_rows_available,n_allianz_rows_added,n_combined_long_rows,n_combined_wide_rows,message
+2026-08-23T16:36:45+00:00,failed,0.0,0,0,0,0,0,World Bank source files not found. Run refresh_data.py first.
+2026-08-23T16:40:00+00:00,failed,0.0,0,0,0,0,0,World Bank source files not found. Run refresh_data.py first.
+2026-08-23T16:53:43+00:00,success,0.34,9416,0,0,9416,4708,Combined successfully: 0 Allianz row(s) added to 9416 World Bank rows.
