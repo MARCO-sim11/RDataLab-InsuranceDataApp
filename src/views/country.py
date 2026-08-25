@@ -12,12 +12,13 @@ from __future__ import annotations
 
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 from src import analytics as an
 from src.common import (
-    LOGO_PATH, COL_LIFE, COL_NONLIFE, fmt_metric, fmt_compact_usd, fmt_pp_signed, fmt_pct_signed,
-    page_header_html, source_transition_note, sync_selector,
+    LOGO_PATH, COL_TOTAL, COL_LIFE, COL_NONLIFE, ICON_LIFE_SVG, ICON_NONLIFE_IMG, fmt_metric, fmt_compact_usd, fmt_pp_signed, fmt_pct_signed,
+    page_header_html, render_kpi_card, render_sub_kpi_card, source_transition_note, sync_selector,
 )
 
 
@@ -29,20 +30,6 @@ def render(ctx: dict) -> None:
             st.image(str(LOGO_PATH), width=42)
     with hdr_r:
         st.markdown(page_header_html(), unsafe_allow_html=True)
-
-
-    pc1, pc2, pc3 = st.columns(3)
-    with pc1:
-        st.selectbox("Country", ctx["countries_sorted"], key="sel_country_page",
-                     on_change=sync_selector, args=("sel_country_page", "sel_country", "sel_country_sb"))
-    with pc2:
-        st.selectbox("Year for split / ranking", ctx["years_desc"], key="sel_year_page",
-                     on_change=sync_selector, args=("sel_year_page", "sel_year", "sel_year_sb"))
-    with pc3:
-        st.slider("Time range", ctx["year_min"], ctx["year_max"], key="sel_year_range_page",
-                   on_change=sync_selector, args=("sel_year_range_page", "sel_year_range", "sel_year_range_sb"))
-
-    st.write("")
     
 
     wide_df = ctx["wide_df"]
@@ -59,10 +46,18 @@ def render(ctx: dict) -> None:
     st.subheader(f"{country} — {metric_label}")
 
     row_cy = wide_range[(wide_range["country"] == country) & (wide_range["year"] == year_selected)]
-    k1, k2, k3 = st.columns(3)
-    k1.metric(f"Total — {year_selected}", fmt_metric(row_cy[cols["total"]].iloc[0] if len(row_cy) else None, metric))
-    k2.metric(f"Life — {year_selected}", fmt_metric(row_cy[cols["life"]].iloc[0] if len(row_cy) else None, metric))
-    k3.metric(f"Non-life — {year_selected}", fmt_metric(row_cy[cols["nonlife"]].iloc[0] if len(row_cy) else None, metric))
+    value_fmt = (lambda v: fmt_metric(v, metric)) if metric == "penetration" else fmt_compact_usd
+    ck_col, cl_col, cnl_col = st.columns([2, 1, 1], vertical_alignment="center")
+    with ck_col:
+        render_kpi_card("\U0001F4CD", f"{country} — {metric_label}",
+                         value_fmt(row_cy[cols["total"]].iloc[0] if len(row_cy) else None),
+                         f"Year {year_selected}")
+    with cl_col:
+        render_sub_kpi_card(ICON_LIFE_SVG, "↳ Life",
+                             value_fmt(row_cy[cols["life"]].iloc[0] if len(row_cy) else None), COL_LIFE)
+    with cnl_col:
+        render_sub_kpi_card(ICON_NONLIFE_IMG, "↳ Non-life",
+                             value_fmt(row_cy[cols["nonlife"]].iloc[0] if len(row_cy) else None), COL_NONLIFE)
 
     c1, c2 = st.columns([2, 1])
 
@@ -77,6 +72,15 @@ def render(ctx: dict) -> None:
                 markers=True, labels={"year": "Year", metric: metric_label, "type": ""},
                 title=f"{metric_label} over time — {country}",
             )
+
+            total_series = wide_range[wide_range["country"] == country].sort_values("year").dropna(subset=[cols["total"]])
+            if not total_series.empty:
+                fig.add_trace(go.Scatter(
+                    x=total_series["year"], y=total_series[cols["total"]],
+                    mode="lines+markers", name="Total",
+                    line=dict(color=COL_TOTAL),
+                ))
+
             iso3 = row_cy["iso3"].iloc[0] if len(row_cy) else long_range.loc[long_range["country"] == country, "iso3"].iloc[0]
             transition_year = an.source_transition_year(long_df, iso3)
             if transition_year and year_range[0] <= transition_year <= year_range[1]:
@@ -102,6 +106,18 @@ def render(ctx: dict) -> None:
             )
             fig.update_traces(textinfo="label+percent")
             st.plotly_chart(fig, width='stretch')
+
+    st.write("")
+    pc1, pc2, pc3 = st.columns(3)
+    with pc1:
+        st.selectbox("Country", ctx["countries_sorted"], key="sel_country_page",
+                     on_change=sync_selector, args=("sel_country_page", "sel_country", "sel_country_sb"))
+    with pc2:
+        st.selectbox("Year for split / ranking", ctx["years_desc"], key="sel_year_page",
+                     on_change=sync_selector, args=("sel_year_page", "sel_year", "sel_year_sb"))
+    with pc3:
+        st.slider("Time range", ctx["year_min"], ctx["year_max"], key="sel_year_range_page",
+                   on_change=sync_selector, args=("sel_year_range_page", "sel_year_range", "sel_year_range_sb"))
 
     st.divider()
     _render_scorecard(wide_df, long_df, country, year_selected, year_range, metric, cols, metric_label)

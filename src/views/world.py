@@ -8,8 +8,8 @@ import plotly.express as px
 import streamlit as st
 
 from src import analytics as an
-from src.common import (LOGO_PATH, COL_LIFE, COL_NONLIFE, COL_TOTAL, REGION_COLORS, aggregate_metric, 
-                    fmt_metric, page_header_html, source_transition_note, sync_selector, )
+from src.common import (LOGO_PATH, COL_LIFE, COL_NONLIFE, COL_TOTAL, REGION_COLORS, ICON_LIFE_SVG, ICON_NONLIFE_IMG, 
+                    aggregate_metric, fmt_metric, page_header_html, source_transition_note, sync_selector, render_kpi_card, render_sub_kpi_card, fmt_compact_usd,)
 
 
 def render(ctx: dict) -> None:
@@ -20,11 +20,6 @@ def render(ctx: dict) -> None:
             st.image(str(LOGO_PATH), width=42)
     with hdr_r:
         st.markdown(page_header_html(), unsafe_allow_html=True)
-
-    st.slider("Time range", ctx["year_min"], ctx["year_max"], key="sel_year_range_page",
-              on_change=sync_selector, args=("sel_year_range_page", "sel_year_range", "sel_year_range_sb"))
-
-    st.write("")
 
 
     wide_df = ctx["wide_df"]
@@ -42,11 +37,17 @@ def render(ctx: dict) -> None:
     world_kpi_df = aggregate_metric(world_year, [], metric)
     world_kpi = world_kpi_df.iloc[0] if len(world_kpi_df) else pd.Series({"total": None, "life": None, "nonlife": None})
 
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric(f"World total — {year_selected}", fmt_metric(world_kpi["total"], metric))
-    k2.metric(f"World life — {year_selected}", fmt_metric(world_kpi["life"], metric))
-    k3.metric(f"World non-life — {year_selected}", fmt_metric(world_kpi["nonlife"], metric))
-    k4.metric(f"Countries covered — {year_selected}", int(world_year[cols["total"]].notna().sum()))
+    value_fmt = (lambda v: fmt_metric(v, metric)) if metric == "penetration" else fmt_compact_usd
+    wk_col, wl_col, wnl_col, wc_col = st.columns([2, 1, 1, 1], vertical_alignment="center")
+    with wk_col:
+        render_kpi_card("\U0001F30D", f"World {metric_label}", value_fmt(world_kpi["total"]),
+                         f"Year {year_selected}")
+    with wl_col:
+        render_sub_kpi_card(ICON_LIFE_SVG, "↳ Life", value_fmt(world_kpi["life"]), COL_LIFE)
+    with wnl_col:
+        render_sub_kpi_card(ICON_NONLIFE_IMG, "↳ Non-life", value_fmt(world_kpi["nonlife"]), COL_NONLIFE)
+    with wc_col:
+        st.metric(f"Countries covered — {year_selected}", int(world_year[cols["total"]].notna().sum()))
 
     c1, c2 = st.columns([2, 1])
     with c1:
@@ -87,6 +88,10 @@ def render(ctx: dict) -> None:
             )
             fig.update_traces(textinfo="label+percent")
             st.plotly_chart(fig, width='stretch')
+
+    st.write("")
+    st.slider("Time range", ctx["year_min"], ctx["year_max"], key="sel_year_range_page",
+              on_change=sync_selector, args=("sel_year_range_page", "sel_year_range", "sel_year_range_sb"))
 
     st.divider()
     series_choice = st.radio("Series", ["total", "life", "nonlife"], horizontal=True, index=0, key="region_series")

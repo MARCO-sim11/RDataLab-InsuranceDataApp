@@ -26,7 +26,7 @@ def render(ctx: dict) -> None:
     hero_l, hero_r = st.columns([1, 5], vertical_alignment="center")
     with hero_l:
         if LOGO_PATH.exists():
-            st.image(str(LOGO_PATH), width=110)
+            st.image(str(LOGO_PATH), width=80)
         else:
             st.markdown("<div style='font-size:64px; text-align:center;'>\U0001F6E1️</div>", unsafe_allow_html=True)
     with hero_r:
