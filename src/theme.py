@@ -94,6 +94,11 @@ def inject_card_css() -> dict:
             background: linear-gradient(90deg, {BRAND_BLUE}, {BRAND_GREEN});
             -webkit-background-clip: text; background-clip: text; color: transparent;
         }}
+        .imx-sidebar-title {{
+            font-size: 26px; font-weight: 800; margin: 0; line-height: 1.2;
+            background: linear-gradient(90deg, {BRAND_BLUE}, {BRAND_GREEN});
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }}
         .imx-tagline {{
             text-align: center; color: {t["text_muted"]}; font-style: italic;
             letter-spacing: .04em; font-size: 14px; margin-top: 8px;

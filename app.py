@@ -62,20 +62,21 @@ card_theme = theme.inject_card_css()
 if LOGO_PATH.exists():
     sb_l, sb_r = st.sidebar.columns([1, 2], vertical_alignment="center")
     with sb_l:
-        st.image(str(LOGO_PATH), width=45)
+        st.image(str(LOGO_PATH), width=50)
     with sb_r:
-        st.markdown(f'<div class="imx-page-title">{APP_NAME}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="imx-sidebar-title">{APP_NAME}</div>', unsafe_allow_html=True)
 else:
     st.sidebar.markdown(f"### \U0001F6E1️ {APP_NAME}")
     st.sidebar.caption(f"(drop a logo at `assets/logo.png` to brand this)")
 
 st.sidebar.markdown(
-    '<div class="imx-tagline">Mapping the Global Insurance Market</div>',
+    '<div class="imx-hero-subtitle"> Mapping the Global Insurance Market</div>',
     unsafe_allow_html=True,
 )
 
-st.sidebar.caption("\U0001F3A8 Theme: use the ⋮ menu (top-right) → Settings → Choose app theme "
-                    "to switch light/dark.")
+#st.sidebar.caption("\U0001F3A8 Theme: use the ⋮ menu (top-right) → Settings → Choose app theme "
+                    #"to switch light/dark.")
+
 st.sidebar.divider()
 
 for page_key, icon, label, _desc in NAV_ITEMS:

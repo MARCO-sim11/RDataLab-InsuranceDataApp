@@ -32,8 +32,7 @@ def render(ctx: dict) -> None:
     with hero_r:
         st.markdown(f'<div class="imx-hero-title">{APP_NAME}</div>', unsafe_allow_html=True)
         st.markdown(
-            '<div class="imx-hero-subtitle">Global insurance market intelligence — '
-            'World Bank &amp; Allianz data, combined.</div>',
+            '<div class="imx-hero-subtitle"> Mapping the Global Insurance Market </div>',
             unsafe_allow_html=True,
         )
 
