@@ -188,6 +188,15 @@ def fmt_pp_signed(value, digits: int = 2) -> str:
         return "NA"
     return f"{value:+.{digits}f}pp"
 
+def sync_selector(source_key: str, *target_keys: str) -> None:
+    """Copies the value of the widget at `source_key` into each of
+    `target_keys`. Used as the on_change callback of a filter widget that
+    exists twice (once in the sidebar, once replicated on a page) so that
+    changing either instance keeps the other - and the canonical value
+    used to build ctx - in sync."""
+    value = st.session_state[source_key]
+    for key in target_keys:
+        st.session_state[key] = value
 
 # World/Life/Non-life KPI cards are rendered through an iframe
 # (components.html) instead of st.markdown so the JS below can detect the
@@ -200,6 +209,7 @@ def fmt_pp_signed(value, digits: int = 2) -> str:
 # same-origin document (a components.html iframe is same-origin with the
 # main app by default), so it can read the live theme with no round trip
 # to Python at all, and re-checks it every 400ms.
+
 _CARD_PALETTE = {
     "dark": {"bg": "#161f33", "border": "#26314a", "muted": "#9aa7bd", "text": "#eef2f7",
              "shadow": "0 6px 20px rgba(0,0,0,0.35)"},
