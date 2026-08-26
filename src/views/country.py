@@ -18,7 +18,7 @@ import streamlit as st
 from src import analytics as an
 from src.common import (
     LOGO_PATH, COL_TOTAL, COL_LIFE, COL_NONLIFE, ICON_LIFE_SVG, ICON_NONLIFE_IMG, fmt_metric, fmt_compact_usd, fmt_pp_signed, fmt_pct_signed,
-    page_header_html, render_kpi_card, render_sub_kpi_card, source_transition_note, sync_selector,
+    page_header_html, render_kpi_card, render_sub_kpi_card, source_transition_note, sync_selector, country_flag, 
 )
 
 
@@ -46,10 +46,12 @@ def render(ctx: dict) -> None:
     st.subheader(f"{country} — {metric_label}")
 
     row_cy = wide_range[(wide_range["country"] == country) & (wide_range["year"] == year_selected)]
+    iso3 = row_cy["iso3"].iloc[0] if len(row_cy) else long_range.loc[long_range["country"] == country, "iso3"].iloc[0]
+
     value_fmt = (lambda v: fmt_metric(v, metric)) if metric == "penetration" else fmt_compact_usd
     ck_col, cl_col, cnl_col = st.columns([2, 1, 1], vertical_alignment="center")
     with ck_col:
-        render_kpi_card("\U0001F4CD", f"{country} — {metric_label}",
+        render_kpi_card(country_flag(iso3), f"{country} — {metric_label}",
                          value_fmt(row_cy[cols["total"]].iloc[0] if len(row_cy) else None),
                          f"Year {year_selected}")
     with cl_col:

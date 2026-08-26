@@ -6,3 +6,4 @@ streamlit>=1.35
 plotly>=5.20
 missingno>=0.5
 pdfplumber>=0.11
+pycountry>=23.12

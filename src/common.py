@@ -13,6 +13,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+import pycountry
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 ASSETS_DIR = Path(__file__).resolve().parent.parent / "assets"
@@ -197,6 +198,23 @@ def sync_selector(source_key: str, *target_keys: str) -> None:
     value = st.session_state[source_key]
     for key in target_keys:
         st.session_state[key] = value
+
+
+def country_flag(iso3: str) -> str:
+    """Small flag image for an ISO 3166-1 alpha-3 code, e.g. 'FRA' -> France's
+    flag. Uses flagcdn.com (free, no API key) instead of the Unicode flag
+    emoji: Windows browsers don't have a font that renders flag emoji as
+    actual flags, they fall back to showing the raw 2-letter code as text.
+    Falls back to a neutral pin if the code isn't a real ISO country.
+    """
+    match = pycountry.countries.get(alpha_3=iso3)
+    if match is None:
+        return "\U0001F4CD"
+    iso2 = match.alpha_2.lower()
+    return (
+        f'<img src="https://flagcdn.com/h40/{iso2}.png" height="30" '
+        f'style="vertical-align:-6px; border-radius:2px;" alt="{iso3}">'
+    )
 
 # World/Life/Non-life KPI cards are rendered through an iframe
 # (components.html) instead of st.markdown so the JS below can detect the
