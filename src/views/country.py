@@ -18,7 +18,7 @@ import streamlit as st
 from src import analytics as an
 from src.common import (
     LOGO_PATH, COL_TOTAL, COL_LIFE, COL_NONLIFE, ICON_LIFE_SVG, ICON_NONLIFE_IMG, fmt_metric, fmt_compact_usd, fmt_pp_signed, fmt_pct_signed,
-    page_header_html, render_kpi_card, render_sub_kpi_card, source_transition_note, sync_selector, country_flag, 
+    page_header_html, render_kpi_card, render_sub_kpi_card, source_transition_note, sync_selector, country_flag, aggregate_metric, 
 )
 
 
@@ -61,6 +61,9 @@ def render(ctx: dict) -> None:
         render_sub_kpi_card(ICON_NONLIFE_IMG, "↳ Non-life",
                              value_fmt(row_cy[cols["nonlife"]].iloc[0] if len(row_cy) else None), COL_NONLIFE)
 
+
+    show_world = st.session_state.get("show_world_avg", False) #controls world average showing
+
     c1, c2 = st.columns([2, 1])
 
     with c1:
@@ -82,6 +85,20 @@ def render(ctx: dict) -> None:
                     mode="lines+markers", name="Total",
                     line=dict(color=COL_TOTAL),
                 ))
+
+            # Adding the world view if necessary
+            if show_world:
+                world_ts = aggregate_metric(wide_range, ["year"], metric)
+                for series_key, series_name, color in (
+                    ("life", "World life", COL_LIFE),
+                    ("nonlife", "World non-life", COL_NONLIFE),
+                    ("total", "World total", COL_TOTAL),
+                ):
+                    fig.add_trace(go.Scatter(
+                        x=world_ts["year"], y=world_ts[series_key],
+                        mode="lines", name=series_name,
+                        line=dict(color=color, dash="dash", width=1),
+                    ))
 
             iso3 = row_cy["iso3"].iloc[0] if len(row_cy) else long_range.loc[long_range["country"] == country, "iso3"].iloc[0]
             transition_year = an.source_transition_year(long_df, iso3)
@@ -110,7 +127,7 @@ def render(ctx: dict) -> None:
             st.plotly_chart(fig, width='stretch')
 
     st.write("")
-    pc1, pc2, pc3 = st.columns(3)
+    pc1, pc2, pc3, pc4 = st.columns(4)
     with pc1:
         st.selectbox("Country", ctx["countries_sorted"], key="sel_country_page",
                      on_change=sync_selector, args=("sel_country_page", "sel_country", "sel_country_sb"))
@@ -120,6 +137,8 @@ def render(ctx: dict) -> None:
     with pc3:
         st.slider("Time range", ctx["year_min"], ctx["year_max"], key="sel_year_range_page",
                    on_change=sync_selector, args=("sel_year_range_page", "sel_year_range", "sel_year_range_sb"))
+    with pc4:
+        st.toggle("Compare to world average", key="show_world_avg")
 
     st.divider()
     _render_scorecard(wide_df, long_df, country, year_selected, year_range, metric, cols, metric_label)
