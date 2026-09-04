@@ -69,25 +69,30 @@ def _render_growth_section(wide_df, year_min: int, year_max: int, default_year: 
 
     growth = an.compute_growth_metrics(wide_df, start_year, end_year, business_line)
 
-    rank_by = st.selectbox(
-        "Rank by", ["cagr_primes", "cagr_per_capita", "delta_penetration"],
-        format_func=lambda c: {"cagr_primes": "Premium volume CAGR", "cagr_per_capita": "Premium per capita CAGR",
-                                "delta_penetration": "Change in penetration (pp)"}[c],
-        key="dyn_rankby",
-    )
+    rc1, rc2 = st.columns([2, 1])
+    with rc1:
+        rank_by = st.selectbox(
+            "Rank by", ["cagr_primes", "cagr_per_capita", "delta_penetration"],
+            format_func=lambda c: {"cagr_primes": "Premium volume CAGR", "cagr_per_capita": "Premium per capita CAGR",
+                                    "delta_penetration": "Change in penetration (pp)"}[c],
+            key="dyn_rankby",
+        )
+    with rc2:
+        top_n = st.selectbox("Top N", list(range(5, 31, 5)), index=1, key="dyn_topn")
+        
     fmt_fn = fmt_pp_signed if rank_by == "delta_penetration" else fmt_pct_signed
     label = {"cagr_primes": "Premium CAGR", "cagr_per_capita": "Premium/capita CAGR", "delta_penetration": "Δ Penetration"}[rank_by]
 
-    top, bottom = an.top_bottom(growth, rank_by, 10)
+    top, bottom = an.top_bottom(growth, rank_by, top_n)
 
     tcol, bcol = st.columns(2)
     with tcol:
-        st.markdown(f"**Top 10 — {label}**")
+        st.markdown(f"**Top {top_n} — {label}**")
         t = top[["country", rank_by]].copy()
         t[label] = t[rank_by].map(fmt_fn)
         st.dataframe(t[["country", label]], hide_index=True, width="stretch")
     with bcol:
-        st.markdown(f"**Bottom 10 — {label}**")
+        st.markdown(f"**Bottom {top_n} — {label}**")
         b = bottom[["country", rank_by]].copy()
         b[label] = b[rank_by].map(fmt_fn)
         st.dataframe(b[["country", label]], hide_index=True, width="stretch")
@@ -95,11 +100,10 @@ def _render_growth_section(wide_df, year_min: int, year_max: int, default_year: 
     fig = px.bar(
         top.sort_values(rank_by), x=rank_by, y="country", orientation="h",
         labels={rank_by: label, "country": ""},
-        title=f"Top 10 by {label.lower()} ({start_year}–{end_year})",
+        title=f"Top {top_n} by {label.lower()} ({start_year}–{end_year})",
     )
     fig.update_layout(margin=dict(t=50))
     st.plotly_chart(fig, width="stretch")
-
 
 def _render_structure_section(wide_df, years_desc, default_year: int, countries_sorted) -> None:
     """Life / Non-Life structure (Section 6).

@@ -82,11 +82,11 @@ def render(ctx: dict) -> None:
             st.info("No data.")
         else:
             fig = px.pie(
-                pie_df, names="type", values="primes", color="type",
+                pie_df, names="type", values="primes", color="type", hole=0.45,
                 color_discrete_map={"Life": COL_LIFE, "Non-life": COL_NONLIFE},
                 title=f"World Life / Non-life — {year_selected}",
             )
-            fig.update_traces(textinfo="label+percent")
+            fig.update_traces(textinfo="label+percent", pull=0.03)
             st.plotly_chart(fig, width='stretch')
 
     st.write("")

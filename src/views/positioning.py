@@ -106,7 +106,9 @@ def render(ctx: dict) -> None:
                 showlegend=False, hoverinfo="skip",
             )
 
-    fig.update_layout(margin=dict(t=60), legend=dict(orientation="h", y=-0.15))
+    fig.update_layout(height=650, margin=dict(t=60), legend=dict(orientation="h", y=-0.15))
+    if log_x:
+        fig.update_xaxes(dtick=1)
     st.plotly_chart(fig, width="stretch")
 
     st.caption(

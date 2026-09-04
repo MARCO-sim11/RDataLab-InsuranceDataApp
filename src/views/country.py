@@ -119,11 +119,11 @@ def render(ctx: dict) -> None:
             st.info("No premium split available.")
         else:
             fig = px.pie(
-                pie_df, names="type", values="primes", hole=0,
+                pie_df, names="type", values="primes", hole=0.45,
                 color="type", color_discrete_map={"Life": COL_LIFE, "Non-life": COL_NONLIFE},
                 title=f"Life / Non-life — {country} — {year_selected}",
             )
-            fig.update_traces(textinfo="label+percent")
+            fig.update_traces(textinfo="label+percent", pull=0.03)
             st.plotly_chart(fig, width='stretch')
 
     st.write("")
