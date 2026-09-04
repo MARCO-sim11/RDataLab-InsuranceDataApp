@@ -103,10 +103,11 @@ def _split_row_left(line: str, n_values: int) -> tuple[str, list[str]] | None:
     return " ".join(tokens[:start]), tokens[start:start + n_values]
 
 
-# A bare 1-digit token, e.g. the "1" in "1 500" (-> 1500). Every grouped
-# density value observed across report editions has exactly this shape: a
-# single leading digit, a space (i.e. a token break), then a 3-digit group.
-_LONE_DIGIT_RE = re.compile(r"^\d$")
+# A bare 1- or 2-digit token, e.g. the "1" in "1 500" (-> 1500), or the
+# "10" in "10 411" (-> 10411). Every grouped density value observed across
+# report editions has exactly this shape: a short leading group (1 or 2
+# digits), a space (i.e. a token break), then a 3-digit group.
+_LONE_DIGIT_RE = re.compile(r"^\d{1,2}$")
 # A continuation group: exactly 3 digits, optionally with a European-style
 # comma-decimal suffix (e.g. "500", or "362,1" for a value like "3362.1").
 _CONTINUATION_RE = re.compile(r"^\d{3}(,\d{1,2})?$")
@@ -118,8 +119,8 @@ def _merge_density_tokens(tokens: list[str]) -> list[str]:
     only columns observed to be split this way (see module docstring for
     why premium/penetration never need this).
 
-    Best-effort heuristic, not a guaranteed-correct parse: a merge fires
-    when the current token is a bare single digit and the next token is a
+    Best-effort heuristic, not a guaranteed-correct parse:a merge fires 
+    when the current token is a bare 1- or 2-digit group and the next token is a
     3-digit group. A genuine standalone single-digit density value
     immediately followed by a genuine standalone 3-digit value would be
     mis-merged into one - no such case has been observed across the 5

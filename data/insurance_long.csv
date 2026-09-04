@@ -897,14 +897,14 @@ Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Life,,1
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Life,0.6,1504365.0,40840212765.9574,236548062.0155001,121.82225193798254,Allianz Global Insurance Report
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Non-life,,1504365.0,40840212765.9574,,,World Bank
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Non-life,1.1,1504365.0,40840212765.9574,354822093.0232501,231.81710077519008,Allianz Global Insurance Report
-Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Life,0.3,1524693.0,46458191489.3617,105304863.81323,71.6073073929964,Allianz Global Insurance Report
-Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Non-life,1.6,1524693.0,46458191489.3617,631829182.8793802,427.53774708171386,Allianz Global Insurance Report
+Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Life,0.3,1524693.0,46458191489.3617,105304863.81323,69.06627354702225,Allianz Global Insurance Report
+Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Non-life,1.6,1524693.0,46458191489.3617,631829182.8793802,414.3976412821337,Allianz Global Insurance Report
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2023,Life,0.2,1577059.0,46192260638.2979,108126862.74509996,44.33201372549098,Allianz Global Insurance Report
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2023,Non-life,1.7,1577059.0,46192260638.2979,756888039.2156996,480.7320317647144,Allianz Global Insurance Report
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2024,Life,0.1,1588670.0,47210732712.766,108238046.875,44.37759921874999,Allianz Global Insurance Report
 Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2024,Non-life,1.9,1588670.0,47210732712.766,865904375.0,565.0026046874999,Allianz Global Insurance Report
-Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Life,0.2,1600366.0,48965725531.9149,112998313.72549003,46.329308627450914,Allianz Global Insurance Report
-Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Non-life,1.6,1600366.0,48965725531.9149,677989882.3529403,445.89134596078367,Allianz Global Insurance Report
+Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Life,0.2,1600366.0,48965725531.9149,112998313.72549003,70.607794545429,Allianz Global Insurance Report
+Bahrain,BHR,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Non-life,1.6,1600366.0,48965725531.9149,677989882.3529403,423.6467672725741,Allianz Global Insurance Report
 "Bahamas, The",BHS,Latin America & Caribbean,HIC,2000,Life,2.334064,323835.0,8076470000.0,188509978.7408,582.1173707005112,World Bank
 "Bahamas, The",BHS,Latin America & Caribbean,HIC,2000,Non-life,1.748165,323835.0,8076470000.0,141190021.7755,435.9937059783532,World Bank
 "Bahamas, The",BHS,Latin America & Caribbean,HIC,2001,Life,3.103213,327836.0,8317830000.0,258119981.8779,787.3448366802304,World Bank
@@ -1221,8 +1221,8 @@ Brazil,BRA,Latin America & Caribbean,UMC,2023,Life,0.5,211140729.0,2191131765684
 Brazil,BRA,Latin America & Caribbean,UMC,2023,Non-life,1.9,211140729.0,2191131765684.63,38276909411.76538,176.4630400000031,Allianz Global Insurance Report
 Brazil,BRA,Latin America & Caribbean,UMC,2024,Life,0.6,211998573.0,2185821610689.31,10499090546.874998,48.70712109374999,Allianz Global Insurance Report
 Brazil,BRA,Latin America & Caribbean,UMC,2024,Non-life,2.0,211998573.0,2185821610689.31,37666840312.49999,173.07263695312497,Allianz Global Insurance Report
-Brazil,BRA,Latin America & Caribbean,UMC,2025,Life,0.5,212812405.0,2279920092492.13,11864822941.176453,55.369173725490114,Allianz Global Insurance Report
-Brazil,BRA,Latin America & Caribbean,UMC,2025,Non-life,3.9,212812405.0,2279920092492.13,87686691450.98026,411.9918518431367,Allianz Global Insurance Report
+Brazil,BRA,Latin America & Caribbean,UMC,2025,Life,0.5,212812405.0,2279920092492.13,11864822941.176453,55.75249685833141,Allianz Global Insurance Report
+Brazil,BRA,Latin America & Caribbean,UMC,2025,Non-life,3.9,212812405.0,2279920092492.13,87686691450.98026,412.0375005910969,Allianz Global Insurance Report
 Barbados,BRB,Latin America & Caribbean,HIC,2000,Life,2.018135,262063.0,3059500000.0,61744840.325,235.6106750094443,World Bank
 Barbados,BRB,Latin America & Caribbean,HIC,2000,Non-life,3.877735,262063.0,3059500000.0,118639302.325,452.71290615233744,World Bank
 Barbados,BRB,Latin America & Caribbean,HIC,2001,Life,2.318866,262425.0,3054500000.0,70829761.97,269.9047802991331,World Bank
@@ -3835,8 +3835,8 @@ Guyana,GUY,Latin America & Caribbean,HIC,2021,Non-life,,815482.0,8041362110.3117
 "Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2023,Non-life,1.6,7536100.0,380762296025.216,6163231176.470696,822.8454254902106,Allianz Global Insurance Report
 "Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2024,Life,17.4,7524100.0,408368682415.423,73168919687.49998,9758.742306249998,Allianz Global Insurance Report
 "Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2024,Non-life,1.6,7524100.0,408368682415.423,6710758906.249998,896.968694453125,Allianz Global Insurance Report
-"Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2025,Life,21.1,7498900.0,427310315921.993,87008701568.62732,11.299831372549002,Allianz Global Insurance Report
-"Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2025,Non-life,1.5,7498900.0,427310315921.993,6327905568.627441,962.745632941175,Allianz Global Insurance Report
+"Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2025,Life,21.1,7498900.0,427310315921.993,87008701568.62732,11764.254441960768,Allianz Global Insurance Report
+"Hong Kong SAR, China",HKG,East Asia & Pacific,HIC,2025,Non-life,1.5,7498900.0,427310315921.993,6327905568.627441,842.9674203921556,Allianz Global Insurance Report
 Honduras,HND,Latin America & Caribbean,LMC,2000,Life,0.545874,6577773.0,7186638029.05875,39229988.47474416,5.9640228500959465,World Bank
 Honduras,HND,Latin America & Caribbean,LMC,2000,Non-life,1.000468,6577773.0,7186638029.05875,71900013.75656348,10.930753274180104,World Bank
 Honduras,HND,Latin America & Caribbean,LMC,2001,Life,0.5575625,6757993.0,7651162302.3456,42660011.81201568,6.312526783027991,World Bank
@@ -5821,8 +5821,8 @@ Mexico,MEX,Latin America & Caribbean,UMC,2021,Life,,127648148.0,1316569466833.94
 Mexico,MEX,Latin America & Caribbean,UMC,2021,Life,1.2,127648148.0,1316569466833.94,15257349999.999758,117.09129069767256,Allianz Global Insurance Report
 Mexico,MEX,Latin America & Caribbean,UMC,2021,Non-life,,127648148.0,1316569466833.94,,,World Bank
 Mexico,MEX,Latin America & Caribbean,UMC,2021,Non-life,0.9,127648148.0,1316569466833.94,12537047286.821505,95.80196511627754,Allianz Global Insurance Report
-Mexico,MEX,Latin America & Caribbean,UMC,2022,Life,1.2,128613117.0,1466934724243.38,16638168482.490343,130.5780311284052,Allianz Global Insurance Report
-Mexico,MEX,Latin America & Caribbean,UMC,2022,Non-life,1.3,128613117.0,1466934724243.38,18428351167.31525,144.26766342412512,Allianz Global Insurance Report
+Mexico,MEX,Latin America & Caribbean,UMC,2022,Life,1.2,128613117.0,1466934724243.38,16638168482.490343,129.36603101292027,Allianz Global Insurance Report
+Mexico,MEX,Latin America & Caribbean,UMC,2022,Non-life,1.3,128613117.0,1466934724243.38,18428351167.31525,143.2851609320319,Allianz Global Insurance Report
 Mexico,MEX,Latin America & Caribbean,UMC,2023,Life,1.1,129739759.0,1794410347718.25,20111596470.588596,156.78395098039493,Allianz Global Insurance Report
 Mexico,MEX,Latin America & Caribbean,UMC,2023,Non-life,1.4,129739759.0,1794410347718.25,26491081372.549488,206.1979272549056,Allianz Global Insurance Report
 Mexico,MEX,Latin America & Caribbean,UMC,2024,Life,1.2,130861007.0,1830489311088.89,20889943046.875,161.27468984374997,Allianz Global Insurance Report
@@ -7041,8 +7041,8 @@ Peru,PER,Latin America & Caribbean,UMC,2023,Life,1.1,33845617.0,268025009709.319
 Peru,PER,Latin America & Caribbean,UMC,2023,Non-life,1.0,33845617.0,268025009709.319,2595044705.882399,75.25629647058956,Allianz Global Insurance Report
 Peru,PER,Latin America & Caribbean,UMC,2024,Life,1.2,34217848.0,291751523018.903,3355379453.1249995,96.33186171875,Allianz Global Insurance Report
 Peru,PER,Latin America & Caribbean,UMC,2024,Non-life,1.0,34217848.0,291751523018.903,2814189218.7499995,81.28677320312498,Allianz Global Insurance Report
-Peru,PER,Latin America & Caribbean,UMC,2025,Life,1.2,34576665.0,334854659181.893,3954940980.392152,116.38826313725473,Allianz Global Insurance Report
-Peru,PER,Latin America & Caribbean,UMC,2025,Non-life,0.7999999999999999,34576665.0,334854659181.893,2824957843.1372504,83.05376058823518,Allianz Global Insurance Report
+Peru,PER,Latin America & Caribbean,UMC,2025,Life,1.2,34576665.0,334854659181.893,3954940980.392152,114.38179420693557,Allianz Global Insurance Report
+Peru,PER,Latin America & Caribbean,UMC,2025,Non-life,0.7999999999999999,34576665.0,334854659181.893,2824957843.1372504,81.70128157638253,Allianz Global Insurance Report
 Philippines,PHL,East Asia & Pacific,UMC,2000,Life,0.706133,79625397.0,83669788376.9213,590819986.7596056,7.419994235753771,World Bank
 Philippines,PHL,East Asia & Pacific,UMC,2000,Non-life,0.4689865,79625397.0,83669788376.9213,392400012.06633,4.928076051744269,World Bank
 Philippines,PHL,East Asia & Pacific,UMC,2001,Life,0.7245332,81401488.0,78921234457.5487,571810545.4947803,7.024571166251658,World Bank
@@ -7747,14 +7747,14 @@ Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Li
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Life,0.1,30784383.0,982661066666.667,473096124.0310002,13.010143410852503,Allianz Global Insurance Report
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Non-life,,30784383.0,982661066666.667,,,World Bank
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2021,Non-life,0.5,30784383.0,982661066666.667,4139591085.271252,115.90855038759504,Allianz Global Insurance Report
-Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Life,0.1,32175224.0,1239075200000.0,631829182.8793801,15.795729571984502,Allianz Global Insurance Report
-Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Non-life,1.5,32175224.0,1239075200000.0,13268412840.466982,364.3548287937758,Allianz Global Insurance Report
+Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Life,0.1,32175224.0,1239075200000.0,631829182.8793801,19.63713392886962,Allianz Global Insurance Report
+Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2022,Non-life,1.5,32175224.0,1239075200000.0,13268412840.466982,412.379812506262,Allianz Global Insurance Report
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2023,Life,0.0,33702731.0,1218584800000.0,432507450.9803999,12.975223529411997,Allianz Global Insurance Report
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2023,Non-life,1.7000000000000002,33702731.0,1218584800000.0,16435283137.25519,447.4289580392236,Allianz Global Insurance Report
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2024,Life,0.0,35300280.0,1254140800000.0,541190234.3749999,14.070946093749995,Allianz Global Insurance Report
 Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2024,Non-life,1.7000000000000002,35300280.0,1254140800000.0,19266372343.75,515.1048650781249,Allianz Global Insurance Report
-Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Life,0.3,36973555.0,1276942933333.33,3163952784.3137207,91.52863411764692,Allianz Global Insurance Report
-Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Non-life,1.5,36973555.0,1276942933333.33,18644721764.705856,539.4539497254893,Allianz Global Insurance Report
+Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Life,0.3,36973555.0,1276942933333.33,3163952784.3137207,85.57339926641409,Allianz Global Insurance Report
+Saudi Arabia,SAU,"Middle East, North Africa, Afghanistan & Pakistan",HIC,2025,Non-life,1.5,36973555.0,1276942933333.33,18644721764.705856,504.27181710565446,Allianz Global Insurance Report
 Sudan,SDN,Sub-Saharan Africa,LIC,2000,Life,0.0023855,27816745.0,12257299147.2936,292397.87115868885,0.0105115775105494,World Bank
 Sudan,SDN,Sub-Saharan Africa,LIC,2000,Non-life,0.0302922,27816745.0,12257299147.2936,3713005.5722964713,0.1334809508551943,World Bank
 Sudan,SDN,Sub-Saharan Africa,LIC,2001,Life,0.0043962,28516770.0,15716361792.1926,690922.6971083712,0.0242286450081257,World Bank
@@ -9907,8 +9907,8 @@ South Africa,ZAF,Sub-Saharan Africa,UMC,2021,Life,,61502603.0,419986284375.368,,
 South Africa,ZAF,Sub-Saharan Africa,UMC,2021,Life,11.2,61502603.0,419986284375.368,44116213565.89077,735.6644728682053,Allianz Global Insurance Report
 South Africa,ZAF,Sub-Saharan Africa,UMC,2021,Non-life,,61502603.0,419986284375.368,,,World Bank
 South Africa,ZAF,Sub-Saharan Africa,UMC,2021,Non-life,3.3,61502603.0,419986284375.368,13128417441.860254,217.6242170542601,Allianz Global Insurance Report
-South Africa,ZAF,Sub-Saharan Africa,UMC,2022,Life,4.4,62378410.0,407596043067.885,16743473346.30357,279.0578891050596,Allianz Global Insurance Report
-South Africa,ZAF,Sub-Saharan Africa,UMC,2022,Non-life,1.4,62378410.0,407596043067.885,5159938326.84827,86.3499883268486,Allianz Global Insurance Report
+South Africa,ZAF,Sub-Saharan Africa,UMC,2022,Life,4.4,62378410.0,407596043067.885,16743473346.30357,268.4177641960346,Allianz Global Insurance Report
+South Africa,ZAF,Sub-Saharan Africa,UMC,2022,Non-life,1.4,62378410.0,407596043067.885,5159938326.84827,82.7199399094698,Allianz Global Insurance Report
 South Africa,ZAF,Sub-Saharan Africa,UMC,2023,Life,9.4,63212384.0,381440724491.232,34924976666.66728,578.4787156862848,Allianz Global Insurance Report
 South Africa,ZAF,Sub-Saharan Africa,UMC,2023,Non-life,6.2,63212384.0,381440724491.232,22922894901.96119,378.66027333334,Allianz Global Insurance Report
 South Africa,ZAF,Sub-Saharan Africa,UMC,2024,Life,9.7,64007187.0,401144998373.585,38857458828.12499,636.4397156249998,Allianz Global Insurance Report
